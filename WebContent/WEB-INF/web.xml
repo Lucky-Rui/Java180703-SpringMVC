@@ -43,13 +43,13 @@
 
 <servlet>
     <description></description>
-    <display-name>StudentController</display-name>
-    <servlet-name>StudentController</servlet-name>
-    <servlet-class>com.situ.mvc.controller.StudentController</servlet-class>
+    <display-name>StudentControllerDemo</display-name>
+    <servlet-name>StudentControllerDemo</servlet-name>
+    <servlet-class>com.situ.mvc.controller.StudentControllerDemo</servlet-class>
 </servlet>
 <servlet-mapping>
-    <servlet-name>StudentController</servlet-name>
-    <url-pattern>/student</url-pattern>
+    <servlet-name>StudentControllerDemo</servlet-name>
+    <url-pattern>/studentDemo</url-pattern>
 </servlet-mapping>
   
 </web-app>

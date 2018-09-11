@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.situ.mvc.entity.Student;
+import com.situ.mvc.entity.StudentAndTeacherBean;
+import com.situ.mvc.entity.Teacher;
 
 @Controller
-@RequestMapping(value = "/student")
-public class StudentController {
+@RequestMapping(value = "/studentDemo")
+public class StudentControllerDemo {
 	/**
 	 * 视图解析器Demo
 	 * 
@@ -25,8 +27,8 @@ public class StudentController {
 	 */
 	@RequestMapping(value = "/getInsertPage")
 	public String getInsertPage() {
-		// return "/WEB-INF/jsp/student_insert.jsp";
-		return "student_insert";
+		// return "/WEB-INF/jsp/student_insert_Demo.jsp";
+		return "student_insert_Demo";
 	}
 
 	/**
@@ -36,13 +38,13 @@ public class StudentController {
 	 * @param model:只能放数据
 	 * @return
 	 */
-	@RequestMapping(value = "/insert")
+	@RequestMapping(value = "/insert",method=RequestMethod.POST)
 	public String insert(Student student, Model model) {
-		//System.out.println(student);
+		// System.out.println(student);
 		// request.setAttribute("student", student);
 		model.addAttribute("student", student);
-		// request.getRequestDespatcher("/student_info.jsp").forwar(req,resp);
-		return "student_info";
+		// request.getRequestDespatcher("/student_info_Demo.jsp").forwar(req,resp);
+		return "student_info_Demo";
 	}
 
 	/**
@@ -53,14 +55,14 @@ public class StudentController {
 	 */
 	@RequestMapping(value = "/insert2")
 	public ModelAndView insert2(Student student) {
-		//System.out.println(student);
+		// System.out.println(student);
 		// request.setAttribute("student", student);
 		// Model域对象放数据，View处理转发和重定向界面
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("student", student);
-		// request.getRequestDespatcher("/student_info.jsp").forwar(req,resp);
-		// modelAndView.setViewName("/WEB-INF/jsp/student_info.jsp");
-		modelAndView.setViewName("student_info");
+		// request.getRequestDespatcher("/student_info_Demo.jsp").forwar(req,resp);
+		// modelAndView.setViewName("/WEB-INF/jsp/student_info_Demo.jsp");
+		modelAndView.setViewName("student_info_Demo");
 		return modelAndView;
 	}
 
@@ -80,7 +82,7 @@ public class StudentController {
 		Student student = new Student(name, age, gender);
 		// 得到Session
 		HttpSession session = request.getSession();
-		request.getRequestDispatcher("/WEB-INF/jsp/student_info.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/student_info_Demo.jsp").forward(request, response);
 	}
 
 	/**
@@ -94,14 +96,30 @@ public class StudentController {
 	 */
 	@RequestMapping(value = "/insert4", method = RequestMethod.POST)
 	public String insert4(String name, Integer age, String gender, Model model) {
-		//System.out.println("name: " + name);
-		//System.out.println("age: " + age);
-		//System.out.println("gender: " + gender);
+		// System.out.println("name: " + name);
+		// System.out.println("age: " + age);
+		// System.out.println("gender: " + gender);
 
 		model.addAttribute("name", name);
 		model.addAttribute("age", age);
 		model.addAttribute("gender", gender);
 
-		return "student_info";
+		return "student_info_Demo";
+	}
+
+	/**
+	 * 写入包装Student，Teacher的模型Bean来收集参数
+	 * 
+	 * @param bean
+	 * @return
+	 */
+	@RequestMapping(value="/insertStudentAndTeacher")
+	public String insertStudentAndTeacher(StudentAndTeacherBean bean) {
+		Student student = bean.getStudent();
+		Teacher teacher = bean.getTeacher();
+		System.out.println(student);
+		System.out.println(teacher);
+
+		return "student_info_Demo";
 	}
 }

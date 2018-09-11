@@ -8,7 +8,17 @@
 </head>
 <body>
 <body>
-   ${student}
+   	${student}<br/>
+	request:${requestScope.student}<br/>
+	session:${sessionScope.student}<br/>
+	application:${applicationtScope.student}<br/>
+	<hr/>
+	${id}<br/>
+	<hr/>
+	${name}<br/>	
+	${age}<br/>	
+	${gender}<br/>	
+   
 </body>
 </body>
 </html>

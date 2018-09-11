@@ -8,7 +8,7 @@
 </head>
 <body>
 <!--不写POST和GET时，默认为GET请求  -->
-<form action="${pageContext.request.contextPath}/student/insert.action">
+<form action="${pageContext.request.contextPath}/studentDemo/insert.action"  method="Post">
    姓名：<input type="text" name="name"/><br/>
    年龄：<input type="text" name="age"/><br/>
    性别：<input type="text" name="gender"/><br/>
