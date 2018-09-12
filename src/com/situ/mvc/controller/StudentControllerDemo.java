@@ -38,7 +38,7 @@ public class StudentControllerDemo {
 	 * @param model:只能放数据
 	 * @return
 	 */
-	@RequestMapping(value = "/insert",method=RequestMethod.POST)
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(Student student, Model model) {
 		// System.out.println(student);
 		// request.setAttribute("student", student);
@@ -113,7 +113,7 @@ public class StudentControllerDemo {
 	 * @param bean
 	 * @return
 	 */
-	@RequestMapping(value="/insertStudentAndTeacher")
+	@RequestMapping(value = "/insertStudentAndTeacher")
 	public String insertStudentAndTeacher(StudentAndTeacherBean bean) {
 		Student student = bean.getStudent();
 		Teacher teacher = bean.getTeacher();

@@ -41,6 +41,7 @@
   <url-pattern>*.action</url-pattern>
 </servlet-mapping>
 
+
 <servlet>
     <description></description>
     <display-name>StudentControllerDemo</display-name>
@@ -50,6 +51,27 @@
 <servlet-mapping>
     <servlet-name>StudentControllerDemo</servlet-name>
     <url-pattern>/studentDemo</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <description></description>
+    <display-name>FileUploadControllerDemo</display-name>
+    <servlet-name>FileUploadControllerDemo</servlet-name>
+    <servlet-class>com.situ.mvc.controller.FileUploadControllerDemo</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>FileUploadControllerDemo</servlet-name>
+    <url-pattern>/fileUploadDemo</url-pattern>
+</servlet-mapping>
+<servlet>
+    <description></description>
+    <display-name>JsonDemo</display-name>
+    <servlet-name>JsonDemo</servlet-name>
+    <servlet-class>com.situ.mvc.controller.JsonDemo</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>JsonDemo</servlet-name>
+    <url-pattern>/jsonDemo</url-pattern>
 </servlet-mapping>
   
 </web-app>
