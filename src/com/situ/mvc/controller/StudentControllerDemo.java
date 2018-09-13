@@ -28,7 +28,18 @@ public class StudentControllerDemo {
 	@RequestMapping(value = "/getInsertPage")
 	public String getInsertPage() {
 		// return "/WEB-INF/jsp/student_insert_Demo.jsp";
-		return "student_insert_Demo";
+		return "/student/student_insert_Demo";
+	}
+
+	/**
+	 * 想要重定向到在WEB-INF的某个jsp页面就要请求这个方法
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/pageList")
+	public String pageList() {
+		//System.out.println("StudentController.pageList()");
+		return "/student/student_list";
 	}
 
 	/**
@@ -44,7 +55,7 @@ public class StudentControllerDemo {
 		// request.setAttribute("student", student);
 		model.addAttribute("student", student);
 		// request.getRequestDespatcher("/student_info_Demo.jsp").forwar(req,resp);
-		return "student_info_Demo";
+		return "/student/student_info_Demo.jsp";
 	}
 
 	/**
@@ -62,7 +73,7 @@ public class StudentControllerDemo {
 		modelAndView.addObject("student", student);
 		// request.getRequestDespatcher("/student_info_Demo.jsp").forwar(req,resp);
 		// modelAndView.setViewName("/WEB-INF/jsp/student_info_Demo.jsp");
-		modelAndView.setViewName("student_info_Demo");
+		modelAndView.setViewName("/student/student_info_Demo");
 		return modelAndView;
 	}
 
@@ -82,7 +93,7 @@ public class StudentControllerDemo {
 		Student student = new Student(name, age, gender);
 		// 得到Session
 		HttpSession session = request.getSession();
-		request.getRequestDispatcher("/WEB-INF/jsp/student_info_Demo.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/student/student_info_Demo.jsp").forward(request, response);
 	}
 
 	/**
@@ -104,7 +115,7 @@ public class StudentControllerDemo {
 		model.addAttribute("age", age);
 		model.addAttribute("gender", gender);
 
-		return "student_info_Demo";
+		return "/student/student_info_Demo";
 	}
 
 	/**
@@ -120,6 +131,6 @@ public class StudentControllerDemo {
 		System.out.println(student);
 		System.out.println(teacher);
 
-		return "student_info_Demo";
+		return "/student/student_info_Demo";
 	}
 }
