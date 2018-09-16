@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-<%-- 将一些公共的东西放到taglibs.jsp中 <%@ include file="../common/taglibs.jsp" %> --%>
-<!-- 因为在jsp中include这个过程是在服务器进行的，所以这个/代表的是项目的根路径，前面不需要再加项目的名字.  -->
-<%@ include file="/WEB-INF/jsp/common/taglibs.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
 <link rel="stylesheet"
-	href="${ctx}/lib/bootstrap-3.3.7-dist/css/bootstrap.css" />
+	href="${pageContext.request.contextPath}/lib/bootstrap-3.3.7-dist/css/bootstrap.css" />
 </head>
 <body>
 	<!--导航开始-->
@@ -32,36 +29,29 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
+					<li><a
+						href="${pageContext.request.contextPath}/student?method=pageList"><span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;学生管理
+					</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/banji?method=pageList"><span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;班级管理</a></li>
 					<li class="active"><a
-						href="${ctx}/student/pageList.action">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-							&nbsp;&nbsp;&nbsp;学生管理
-					</a></li>
+						href="${pageContext.request.contextPath}/course?method=pageList"><span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;课程管理</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-home"
+							aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;教务管理</a></li>
 					<li><a
-						href="${ctx}/banji/pageList.action">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-							&nbsp;&nbsp;&nbsp;班级管理
-					</a></li>
-					<li><a
-						href="${ctx}/course/pageList">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-							&nbsp;&nbsp;&nbsp;课程管理
-					</a></li>
-					<li><a href="#"> <span class="glyphicon glyphicon-home"
-							aria-hidden="true"></span> &nbsp;&nbsp;&nbsp;教务管理
-					</a></li>
-					<li><a
-						href="${ctx}/online_user_list.jsp">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-							&nbsp;&nbsp;&nbsp;在线人数
-					</a></li>
+						href="${pageContext.request.contextPath}/online_user_list.jsp"><span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;在线人数</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a
-						href="${ctx}/student/pageList.action"><span>欢迎：${user.name}</span></a></li>
+						href="${pageContext.request.contextPath}/student?method=pageList"><span>欢迎：${user.name}</span></a></li>
 					<li><a
-						href="${ctx}/login?method=logout"><span
-							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;退出</a></li>
+						href="${pageContext.request.contextPath}/login?method=logout">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;退出
+					</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -75,51 +65,37 @@
 			<!--左边部分（链接列表组）开始-->
 			<div class="col-md-2">
 				<div class="list-group">
-					<a
-						href="${ctx}/student/pageList.action"
-						class="list-group-item active"> 学生列表 </a> <a
-						href="${ctx}/student?method=getAddBanJiPage"
-						class="list-group-item">学生添加</a>
+					<a href="${pageContext.request.contextPath}/course?method=pageList"
+						class="list-group-item active">课程列表 </a> <a
+						href="${pageContext.request.contextPath}/course_add.jsp"
+						class="list-group-item">课程添加</a>
 				</div>
 			</div>
 			<!--左边部分（链接列表组）结束-->
 			<!--右边部分（table表显示信息）开始-->
 			<div class="col-md-10">
-				<form id="searchFrom" action="${ctx}/student/pageList.action" method="POST">
-						<input type="hidden" id="pageNo" name="pageNo"/>
-						姓名：<input type="text" name="name"/>
-						年龄：<input type="text" name="age"/>
-						<input type="submit" value="搜索">
-				</form>
-				<br/> 
 				<table class="table table-hover">
 					<tr>
 						<th><input type="checkbox" id="selectAlls"
-							onclick="selectAll()" /> 全选</th>
+							onclick="selectAll()" />全选</th>
 						<th>ID</th>
-						<th>姓名</th>
-						<th>年龄</th>
-						<th>性别</th>
-						<th>班级</th>
-						<th>修改</th>
-						<th>删除</th>
-
+						<th>课程名称</th>
+						<th>课程学分</th>
+						<td>修改</td>
+						<td>删除</td>
 					</tr>
-					<c:forEach items="${pageBean.list}" var="map">
+					<c:forEach items="${pageBean.list}" var="course">
 						<tr>
 							<td><input type="checkbox" name="selectIds"
-								value="${map['s_id']}" /></td>
-							<td>${map['s_id']}</td>
-							<td>${map['s_name']}</td>
-							<td>${map['s_age']}</td>
-							<td>${map['s_gender']}</td>
-							<td>${map['b_name']}</td>
+								value="${course.id}" /></td>
+							<td>${course.id}</td>
+							<td>${course.name}</td>
+							<td>${course.credit}</td>
 							<td><a
-								href="${ctx}/student?method=toUpdate&id=${map['s_id']}">
-									修改 </a></td>
+								href="${pageContext.request.contextPath}/course?method=toUpdate&id=${course.id}">修改</a></td>
 							<td><a
-								href="javascript:deleteById(${map['s_id']},${pageBean.pageNo})">
-									删除 </a></td>
+								href="javascript:deleteById(${course.id},${pageBean.pageNo})">删除</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -139,7 +115,7 @@
 				</c:if>
 				<c:if test="${pageBean.pageNo != 1}">
 					<li><a
-						href="${ctx}/student/pageList.action&pageNo=${pageBean.pageNo - 1}&pageSize=3"
+						href="${pageContext.request.contextPath}/course?method=pageList&pageNo=${pageBean.pageNo - 1}&pageSize=10"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
@@ -151,7 +127,7 @@
 					</c:if>
 					<c:if test="${pageBean.pageNo != i}">
 						<li><a
-							href="${ctx}/student/pageList.action&pageNo=${i}&pageSize=3">${i}</a></li>
+							href="${pageContext.request.contextPath}/course?method=pageList&pageNo=${i}&pageSize=10">${i}</a></li>
 					</c:if>
 				</c:forEach>
 				<!--中间页码结束  -->
@@ -163,7 +139,7 @@
 				</c:if>
 				<c:if test="${pageBean.pageNo != pageBean.totalPage}">
 					<li><a
-						href="${ctx}/student/pageList.action&pageNo=${pageBean.pageNo + 1}&pageSize=3"
+						href="${pageContext.request.contextPath}/course?method=pageList&pageNo=${pageBean.pageNo + 1}&pageSize=10"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</c:if>
@@ -173,12 +149,12 @@
 	</div>
 	<!--选择页结束 -->
 	<script type="text/javascript"
-		src="${ctx}/lib/jquery/jquery-1.11.1.js"></script>
+		src="${pageContext.request.contextPath}/lib/jquery/jquery-1.11.1.js"></script>
 	<script type="text/javascript"
-		src="${ctx}/lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-	<script src="${ctx}/lib/layer/layer.js"
+		src="${pageContext.request.contextPath}/lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/layer/layer.js"
 		type="text/javascript" charset="utf-8"></script>
-	<script src="${ctx}/js/mylayer.js"
+	<script src="${pageContext.request.contextPath}/js/mylayer.js"
 		type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 			/* function deleteById(id,pageNo) {
@@ -186,9 +162,12 @@
 				//用户点了取消，confirm返回的是false，
 				var isDel = confirm("您确认要删除这个信息吗？");
 				if (isDel) {
-					location.href = "${ctx}/student?method=deleteById&id="+ id+"&pageNo="+pageNo;
+					location.href = "${pageContext.request.contextPath}/course?method=deleteById&id="+ id+"&pageNo="+pageNo;
 				}
 			} */
+			function deleteById(id,pageNo){
+				mylayer.confirm("你确定要删除吗？","${pageContext.request.contextPath}/course?method=deleteById&id="+ id+"&pageNo="+pageNo);
+			}
 			
 			function selectAll(){
 				//得到上面全选、反选按钮的状态
@@ -199,14 +178,10 @@
 			function deleteAll() {
 				var isDel = confirm("您确认要删除这些信息吗？");
 				if(isDel){
-				$("#mainForm").attr("action", "${ctx}/student?method=deleteAll");
+				$("#mainForm").attr("action", "${pageContext.request.contextPath}/course?method=deleteAll");
 				//用代码方式提交表单
 				$("#mainForm").submit();
 				}
-			}
-			
-			function deleteById(id,pageNo){
-				mylayer.confirm("你确定要删除吗？","${ctx}/student?method=deleteById&id="+ id+"&pageNo="+pageNo);
 			}
 		</script>
 </body>

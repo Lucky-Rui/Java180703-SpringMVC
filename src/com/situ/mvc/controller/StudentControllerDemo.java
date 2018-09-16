@@ -21,7 +21,7 @@ import com.situ.mvc.entity.Teacher;
 @RequestMapping(value = "/studentDemo")
 public class StudentControllerDemo {
 	/**
-	 * 视图解析器Demo
+	 * WEB-INF文件里的jsp不能直接访问，需要先访问这个
 	 * 
 	 * @return
 	 */
@@ -38,7 +38,7 @@ public class StudentControllerDemo {
 	 */
 	@RequestMapping(value = "/pageList")
 	public String pageList() {
-		//System.out.println("StudentController.pageList()");
+		// System.out.println("StudentController.pageList()");
 		return "/student/student_list";
 	}
 
