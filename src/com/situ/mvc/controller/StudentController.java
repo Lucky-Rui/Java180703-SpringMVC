@@ -1,6 +1,7 @@
 package com.situ.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,10 @@ public class StudentController {
 	@RequestMapping(value = "/pageList")
 	public String pageList(Integer pageNo, Integer pageSize, String name, Integer age, String gender, Model model) {
 		// 1、接收请求参数
-		if (pageNo == null) {
+		if (pageNo == null || pageNo.equals("")) {
 			pageNo = 1;
 		}
-		if (pageSize == null) {
+		if (pageSize == null || pageSize.equals("")) {
 			pageSize = 3;
 		}
 		// 把所有的搜索条件封装成了StudentSearchCondition这样一个对象
@@ -49,7 +50,7 @@ public class StudentController {
 		System.out.println(pageBean);
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("searchCondition", searchCondition);
-		return "student_list";
+		return "/student/student_list";
 	}
 
 	/**
@@ -65,16 +66,31 @@ public class StudentController {
 	}
 
 	/**
-	 * 得到增添界面
+	 * 查出所有班级信息,用于添加学生的班级
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/getAddPage")
-	public String getAddPage(Model model) {
+	public String getAddBanJiPage(Model model) {
 		List<BanJi> list = new ArrayList<>();
 		list = banjiService.list();
 		model.addAttribute("list", list);
 		return "/student/student_add";
+	}
+
+	/**
+	 * 批量删除
+	 * @param selectIds
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteAll")
+	public String deleteAll(String[] selectIds, Model model) {
+		System.out.println(Arrays.toString(selectIds));
+		
+		studentService.deleteAll(selectIds);
+		return "redirect:/student/pageList.action";
+
 	}
 
 	/**
@@ -100,8 +116,8 @@ public class StudentController {
 		// 2、调用service层，返回对应的student
 		Student student = studentService.findById(id);
 		List<BanJi> list = banjiService.list();
-		model.addAttribute("student", student);
 		model.addAttribute("list", list);
+		model.addAttribute("student", student);
 		return "/student/student_update";
 	}
 
@@ -122,7 +138,7 @@ public class StudentController {
 		Student student = new Student(id, name, age, gender, banjiId);
 		// 2、调用service处理
 		boolean result = studentService.updateStudent(student);
-		System.out.println(result == true ? "成功" : "失败");
+		System.out.println(result == true ? "修改成功" : "修改失败");
 		// 3、重定向到界面
 		return "redirect:/student/pageList.action";
 	}

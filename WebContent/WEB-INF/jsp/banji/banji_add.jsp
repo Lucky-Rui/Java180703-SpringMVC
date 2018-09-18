@@ -29,11 +29,11 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a
+					<li><a
 						href="${pageContext.request.contextPath}/student?method=pageList"><span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;学生管理
 					</a></li>
-					<li><a
+					<li class="active"><a
 						href="${pageContext.request.contextPath}/banji?method=pageList"><span
 							class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;班级管理</a></li>
 					<li><a href="${pageContext.request.contextPath}/course?method=pageList"><span class="glyphicon glyphicon-home"
@@ -63,58 +63,60 @@
 			<!--左边部分（链接列表组）开始-->
 			<div class="col-md-2">
 				<div class="list-group">
-					<a
-						href="${pageContext.request.contextPath}/student?method=pageList"
-						class="list-group-item "> 学生列表 </a> <a href="student_add.jsp"
-						class="list-group-item active">学生添加</a>
+					<a href="${pageContext.request.contextPath}/banji?method=pageList"
+						class="list-group-item "> 班级列表 </a> <a href="banji_add.jsp"
+						class="list-group-item active">班级添加 </a>
 				</div>
 			</div>
 			<!--左边部分（链接列表组）结束-->
 			<!--右边部分（form表单）开始-->
 			<div class="col-md-10">
 				<form style="width: 100%; text-align: center;"
-					action="${pageContext.request.contextPath}/student?method=insert"
+					action="${pageContext.request.contextPath}/banji?method=insert"
 					method="post">
 					<div class="form-group">
-						<label for="name">学生姓名</label> <input type="text" name="name"
-							style="width: auto; margin: auto;" class="form-control"
-							id="aname" placeholder="例如：张三">
+						<label for="name">班级名称</label> <input type="text" name="name"
+							id="name" onblur="checkName()" style="width: auto; margin: auto;"
+							class="form-control" placeholder="例如：Java1809">
 					</div>
-					<div class="form-group">
-						<label for="age">学生年龄</label> <input type="text" name="age"
-							style="width: auto; margin: auto;" class="form-control" id="age"
-							placeholder="例如：10">
-					</div>
-					<div class="form-group">
-						<label for="gender">学生性别</label> <input type="text" name="gender"
-							style="width: auto; margin: auto;" class="form-control"
-							id="gender" placeholder="例如：男/女">
-					</div>
-					<div class="form-group">
-						<label for="gender">学生班级</label> <select name="banjiId"
-							class="form-control" style="width: auto; margin: auto;">
-							<option>---------请选择班级---------</option>
-							<c:forEach items="${list}" var="banji">
-								<option value="${banji.id}">${banji.name}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<br />
-					<button type="submit" class="btn btn-default">保存</button>
+					<button type="submit" class="btn btn-default">添加</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="reset" class="btn btn-default">重置</button>
 				</form>
 			</div>
 			<!--右边部分（form表单）结束-->
 		</div>
+
 	</div>
 	<!--内容部分结束-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/lib/jquery/jquery-1.11.1.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/layer/layer.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/mylayer.js"
+		type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-			
-		</script>
+		function checkName(){
+			var name = document.getElementById("name").value;
+			//ajax请求验证这个用户名
+			$.post(
+				"${pageContext.request.contextPath}/banji?method=checkName",
+				{"name":name},
+				function(data) {
+					//{"isExist":isExist}
+					if (data.isExist){
+						//警告
+						mylayer.errorAlert("该班级已经存在，请使用其它班级名称");
+					} else {
+						//正确
+						mylayer.success("该班级名可以使用");
+					}
+				},
+				"json"
+			);
+		}
+	</script>
 </body>
 </html>

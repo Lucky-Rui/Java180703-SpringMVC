@@ -136,35 +136,4 @@ public class StudentServiceImpl implements IStudentService {
 		return pageBean;
 	}
 
-	@Override
-	public boolean insert(com.situ.mvc.service.Student student) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateStudent(com.situ.mvc.service.Student student) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public com.situ.mvc.service.Student findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public com.situ.mvc.service.PageBean getPageBean(int pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public com.situ.mvc.service.PageBean<com.situ.mvc.service.Student> getPageBean(
-			com.situ.mvc.service.StudentSearchCondition searchCondition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

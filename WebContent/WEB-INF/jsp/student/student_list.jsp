@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/common/taglibs.jsp" %>
 <!DOCTYPE html>
@@ -105,7 +105,7 @@
 						<th>性别</th>
 						<th>班级</th>
 						<th>修改</th>
-						<th>删除</th>
+						<th> <a href="javascript:deleteAll()">批量删除</a></th>
 					</tr>
 					<c:forEach items="${pageBean.list}" var="map">
 						<tr>
@@ -120,7 +120,7 @@
 								href="${ctx}/student/toUpdate.action?id=${map['s_id']}">
 									修改 </a></td>
 							<td><a
-								href="javascript:deleteById(${map['s_id']},${pageBean.pageNo})">
+								href="javascript:deleteById(${map['s_id']})">
 									删除 </a></td>
 						</tr>
 					</c:forEach>
@@ -218,17 +218,18 @@
 				$("input[name=selectIds]").prop("checked", isChecked);
 			}
 			
-			function deleteAll() {
-				var isDel = confirm("您确认要删除这些信息吗？");
+			function deleteAll(selectIds) {
+				/* var isDel = confirm("您确认要删除这些信息吗？");
 				if(isDel){
-				$("#mainForm").attr("action", "${ctx}/student?method=deleteAll");
+				$("#mainForm").attr("action", "${ctx}/student/deleteAll.action");
 				//用代码方式提交表单
 				$("#mainForm").submit();
-				}
+				} */
+				mylayer.confirm("你确定要删除吗？","${ctx}/student/deleteAll.action");
 			}
 			
-			function deleteById(id,pageNo){
-				mylayer.confirm("你确定要删除吗？","${ctx}/student/deleteById.action?id="+ id+"&pageNo="+pageNo);
+			function deleteById(id){
+				mylayer.confirm("你确定要删除吗？","${ctx}/student/deleteById.action?id="+ id);
 			}
 		</script>
 </body>

@@ -67,6 +67,4 @@ public class PageBean<T> {
 				+ totalPage + ", list=" + list + "]";
 	}
 
-	
-
 }
